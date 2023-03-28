@@ -1,27 +1,26 @@
 package db
 
 import (
-	"fmt"
-	"log"
+	"context"
+	"crpalert/seeds"
 
-	"github.com/go-redis/redis"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-func Init() *redis.Client {
-	// new redis client
-	client := redis.NewClient(&redis.Options{
-		Addr:     "127.0.0.1:6379",
-		Password: "",
-		DB:       1,
-	})
-
-	// test connection
-	pong, err := client.Ping().Result()
+func Init() *mongo.Database {
+	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://localhost:27017"))
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	// return pong if server is online
-	fmt.Println(pong)
 
-	return client
+	if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
+		panic(err)
+	}
+
+	database := client.Database("cim")
+
+	seeds.SetSeeds(database)
+	return database
 }

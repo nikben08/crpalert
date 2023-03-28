@@ -10,10 +10,10 @@ func Commands(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	switch update.Message.Command() {
 	case "start":
 		services.Start(bot, update)
-	case "set_indicator":
+	case "set_bid_alert":
 		services.SetCoin(bot, update)
 	case "show_all_indicators":
-		services.ShowAllActiveIndicators(bot, update.Message.Chat.ID)
+		services.ShowAllIndicators(bot, update.Message.Chat.ID)
 	case "delete_all_indicators":
 		services.DeleteAllIndicators(bot, update.Message.Chat.ID)
 	case "delete_indicator":

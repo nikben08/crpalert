@@ -7,13 +7,11 @@ import (
 )
 
 func DeleteAllIndicators(bot *tgbotapi.BotAPI, chatId int64) {
-	rows := repositories.GetAllIndicators(chatId)
+	indicators := repositories.DeleteAllIndicators(chatId)
 	text := "Deleted indicators:\n"
-	for i := 0; i < len(rows); i++ {
-		text += rows[i]["indicator"] + " for " + rows[i]["coin"] + " coin" + "\n"
+	for i := 0; i < len(indicators); i++ {
+		text += indicators[i].Indicator + " for " + indicators[i].Coin + " coin" + "\n"
 	}
-
-	repositories.DeleteAllIndicators(chatId)
 
 	msg := tgbotapi.NewMessage(chatId, text)
 	if _, err := bot.Send(msg); err != nil {

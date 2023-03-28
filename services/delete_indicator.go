@@ -12,7 +12,7 @@ func DeleteIndicator(bot *tgbotapi.BotAPI, chatId int64) {
 	data := repositories.GetAllIndicators(chatId)
 	var btns []tgbotapi.InlineKeyboardButton
 	for i := 0; i < len(data); i++ {
-		btn := tgbotapi.NewInlineKeyboardButtonData("coin "+data[i]["coin"]+" indicator "+data[i]["indicator"]+" interval "+data[i]["interval"], "delete_indicator="+data[i]["indicatorId"])
+		btn := tgbotapi.NewInlineKeyboardButtonData("coin "+data[i].Coin+" indicator "+data[i].Indicator+" interval "+data[i].Frame, "delete_indicator="+data[i].Id)
 		btns = append(btns, btn)
 	}
 
@@ -26,7 +26,6 @@ func DeleteIndicator(bot *tgbotapi.BotAPI, chatId int64) {
 			rows = append(rows, row)
 		}
 	}
-
 	fmt.Println(len(rows))
 	var keyboard = tgbotapi.InlineKeyboardMarkup{InlineKeyboard: rows}
 	//keyboard.InlineKeyboard = rows
@@ -42,7 +41,7 @@ func DeleteIndicator(bot *tgbotapi.BotAPI, chatId int64) {
 func DeleteIndicatorCallback(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	chatId := update.CallbackQuery.Message.Chat.ID
 	_, indicatorId := utils.GetKeyValue(update.CallbackQuery.Data)
-	repositories.DeleteIndicator(chatId, indicatorId)
+	repositories.DeleteIndicator(indicatorId)
 	text := "Indicator successfully deleted"
 	msg := tgbotapi.NewMessage(chatId, text)
 	if _, err := bot.Send(msg); err != nil {

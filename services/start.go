@@ -7,6 +7,7 @@ import (
 )
 
 func Start(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
+
 	text := "Hi! This bot tracks changes in crypto coin indicators. " +
 		"When changing, the bot will send you a notification." +
 		"Please select the crypto coin you want to track."

@@ -21,6 +21,14 @@ func SelectCoinKeyboard() tgbotapi.InlineKeyboardMarkup {
 			tgbotapi.NewInlineKeyboardButtonData("ADA", "coin=ADA"),
 			tgbotapi.NewInlineKeyboardButtonData("DOGE", "coin=DOGE"),
 		),
+		tgbotapi.NewInlineKeyboardRow(
+			tgbotapi.NewInlineKeyboardButtonData("LINK", "coin=LINK"),
+			tgbotapi.NewInlineKeyboardButtonData("ATOM", "coin=ATOM"),
+			tgbotapi.NewInlineKeyboardButtonData("SHIB", "coin=SHIB"),
+		),
+		tgbotapi.NewInlineKeyboardRow(
+			tgbotapi.NewInlineKeyboardButtonData("Another symbol", "coin=type"),
+		),
 	)
 
 	return selectCoinKeyboard

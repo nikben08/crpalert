@@ -7,7 +7,7 @@ import (
 func CmdKeyboard() tgbotapi.ReplyKeyboardMarkup {
 	var cmdKeyboard = tgbotapi.NewReplyKeyboard(
 		tgbotapi.NewKeyboardButtonRow(
-			tgbotapi.NewKeyboardButton("/set_indicator"),
+			tgbotapi.NewKeyboardButton("/set_bid_alert"),
 		),
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton("/delete_indicator"),

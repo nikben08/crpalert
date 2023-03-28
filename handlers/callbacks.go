@@ -17,15 +17,19 @@ func Callbacks(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		panic(err)
 	}
 
-	cmd, _ := utils.GetKeyValue(update.CallbackQuery.Data)
+	cmd, value := utils.GetKeyValue(update.CallbackQuery.Data)
 
 	switch {
-	case cmd == "coin":
+	case cmd == "coin" && value != "type":
 		services.SetCoinCallback(bot, update)
+	case cmd == "coin" && value == "type":
+		services.TypeCoinCallback(bot, update)
 	case cmd == "indicator":
 		services.SetIndicatorCallback(bot, update)
 	case cmd == "interval":
 		services.SetFrameCallback(bot, update)
+	case cmd == "condition":
+		services.SetConditionCallback(bot, update)
 	case cmd == "delete_indicator":
 		services.DeleteIndicatorCallback(bot, update)
 	}
